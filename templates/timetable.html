@@ -1,0 +1,51 @@
+{%extends 'base.html'%}
+{% block content %}
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+body {
+    height: 100%;
+    margin: 0;
+}
+.table {
+    height:100%;
+    width: 100%;
+}
+.t_container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    background-color: aqua;
+}
+.body .footer{
+    flex: 0 1 40 px;
+}
+</style>
+
+<body>
+    <div class="t_container">
+        <table class="table">
+            <tr>
+                <th>{{ activity }}</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+            {% for i in '0123456' %}
+            <tr>
+                <td>Time</td>
+                {% for i in '0123456' %}
+                <td>Trial</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+    </div>
+</body>

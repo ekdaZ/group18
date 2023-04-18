@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link rel="icon" href="{% static 'Focal logo.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="" id="navbar__icon"><img src="{% static 'Focal logo.png' %}" id="icon">ocal</a>
+
+            <ul class="navbar__menu">
+                <li><a href="" class="menu">Overview</a></li>
+                <li><a href="" class="menu">Activity</a></li>
+                <li><a href="" class="menu">Planner</a></li>
+            </ul>
+
+            <ul class="navbar__menu">
+                <li class="navbar__button"><a href="/register" id="button">Sign Up</a></li>
+                <li><a href="/login" class="menu">Log In</a></li>
+            </ul>
+        </div>
+        <span>
+            Hello,{{request.user}}
+        </span>
+        <span>
+            <a href="/logout">Logout</a>
+        </span>
+    </nav>
+    {%block content%}
+    {%endblock%}
+        <footer class="footer">
+            <p>© Copyright 2023 Focal All rights reserved • Terms of Service • Privacy Policy</p>
+        </footer>
+    </body>
+    
+</html>
+    
