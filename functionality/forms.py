@@ -1,8 +1,22 @@
-from django.forms import ModelForm
+from django import forms
+from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
+
 from functionality.models import Activity
 
 
-class ActivityForm(ModelForm):
-    class Meta:
-        model = Activity
-        fields = '__all__'
+class ActivityForm(forms.Form):
+    activity_name = forms.CharField(max_length = 200)
+    # user_id = models.OneToOneField(User, null = True, on_delete=models.CASCADE)
+    date_time_start = forms.DateTimeField(widget=AdminDateWidget())
+    date_time_finish = forms.DateTimeField(widget=AdminDateWidget())
+    # date_time_added = models.DateTimeField()
+    record_description = forms.CharField(max_length=2000)
+    date_time_start = forms.SplitDateTimeField(widget = AdminSplitDateTime())
+    date_time_finish = forms.SplitDateTimeField(widget = AdminSplitDateTime())
+
+# class ActivityForm(forms.ModelForm):
+#     date_time_start = forms.SplitDateTimeField(widget = AdminSplitDateTime())
+#     date_time_finish = forms.SplitDateTimeField(widget = AdminSplitDateTime())
+#     class Meta:
+#         model = Activity
+#         fields = ["activity_name", "date_time_start", "date_time_finish", "record_description"]

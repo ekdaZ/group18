@@ -28,24 +28,29 @@ body {
     <div class="t_container">
         <table class="table">
             <tr>
-                <th>{{ activity }}</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-            {% for i in '0123456' %}
-            <tr>
-                <td>Time</td>
-                {% for i in '0123456' %}
-                <td>Trial</td>
+                {% for item in activity %}
+                <th>{{ item.activity_name }}</th>
                 {% endfor %}
             </tr>
-            {% endfor %}
+            <tr>
+                {% for item in activity %}
+                    <td>
+                        {{item.date_time_start}}
+                        <a href="{% url 'info' %}"> Click </a>
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for item in activity %}
+                <td>{{item.date_time_finish}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for item in activity %}
+                <td>{{item.completed}}</td>
+                {% endfor %}
+            </tr>
         </table>
-    {% endblock %}
     </div>
 </body>
+{% endblock %}

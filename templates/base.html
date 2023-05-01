@@ -27,15 +27,16 @@
             </ul>
 
             <ul class="navbar__menu">
+                {% if user.is_authenticated %}
+                <li>You are logged in as {{request.user }} </li>
+                <li class = "navbar__button"><a href="/logout" id="button">Log Out</a> </li>
+                {% else %}
                 <li class="navbar__button"><a href="/register" id="button">Sign Up</a></li>
                 <li><a href="/login" class="menu">Log In</a></li>
+                {%endif%}
             </ul>
         </div>
         <span>
-            Hello,{{request.user}}
-        </span>
-        <span>
-            <a href="/logout">Logout</a>
         </span>
     </nav>
     {%block content%}
