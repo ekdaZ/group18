@@ -52,3 +52,9 @@ def new_activity(request):
 
     context = {'form': form}
     return render(request, 'create-activity.html' , context)
+
+
+# @login_required(login_url='login')
+# def timer(request):
+    
+
