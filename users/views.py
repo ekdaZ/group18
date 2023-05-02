@@ -46,8 +46,8 @@ def register(request):
             else:
                 messages.info(request, "Login already exists")
 
-        context = {'form':form , 'auth': auth_form}
-        return render(request, 'register.html',context)
+    context = {'form':form , 'auth': auth_form}
+    return render(request, 'register.html',context)
 
 
 def loginPage(request):
@@ -62,8 +62,8 @@ def loginPage(request):
             return redirect('info')
         else:
             messages.info(request, "Username or password is incorrect")
-        context = {}
-        return render(request, 'login.html',context)
+    context = {}
+    return render(request, 'login.html',context)
 
 @login_required(login_url='login')
 def logoutPage(request):
