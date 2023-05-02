@@ -28,21 +28,24 @@ def new_activity(request):
         form = ActivityForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('activity_name')
+            duration = form.cleaned_data.get('duration')
             description = form.cleaned_data.get('record_description')
-            end = form.cleaned_data.get('date_time_finish')
+            # end = form.cleaned_data.get('date_time_finish')
             start = form.cleaned_data.get('date_time_start')
             now = datetime.datetime.today()
             start = start.replace(tzinfo = None)
-            end = end.replace(tzinfo = None)
+            # end = end.replace(tzinfo = None)
             user = User.objects.get(username = request.user.username)
-            if now <= start and now <= end and start < end:
+            if now <= start:
                 Activity.objects.create(
                     activity_name = name,
                     user_id = user,
                     date_time_start = start,
-                    date_time_finish = end,
+                    # date_time_finish = end,
+                    duration = duration,
+                    completion = 0,
                     record_description = description,
-                    date_time_added = now
+                    # date_time_added = now
                 )
             else:
                 messages.info(request, "Start date before due and start date after current date")
