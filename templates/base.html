@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,27 +19,42 @@
     <!-- Navbar Section -->
     <nav class="navbar">
         <div class="navbar__container">
-            <a href="" id="navbar__icon"><img src="{% static 'Focal logo.png' %}" id="icon">ocal</a>
+            <a href="/" id="navbar__icon"><img src="{% static 'Focal logo.png' %}" id="icon">ocal</a>
 
             <ul class="navbar__menu">
-                <li><a href="" class="menu">Overview</a></li>
+                <li><a href="/overview" class="menu">Overview</a></li>
                 <li><a href="" class="menu">Activity</a></li>
-                <li><a href="" class="menu">Planner</a></li>
+                <li><a href="/timetable" class="menu">Planner</a></li>
             </ul>
 
             <ul class="navbar__menu">
-                {% if user.is_authenticated %}
-                <li>You are logged in as {{request.user }} </li>
-                <li class = "navbar__button"><a href="/logout" id="button">Log Out</a> </li>
-                {% else %}
                 <li class="navbar__button"><a href="/register" id="button">Sign Up</a></li>
                 <li><a href="/login" class="menu">Log In</a></li>
-                {%endif%}
             </ul>
         </div>
-        <span>
-        </span>
+        <div class="navbar__welcome">
+            <span>
+                Hello, {{request.user}}  
+            </span>
+            <span style="font-weight: bold">
+                <a href="/logout">Logout</a>
+            </span>
+        </div>
     </nav>
+    
+    <script>
+        window.addEventListener('scroll', function()
+        {
+            var navbar = document.querySelector('.navbar');
+            if(window.pageYOffset > 0){
+                navbar.classList.add('scrolled');
+            }
+            else{
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+        
     {%block content%}
     {%endblock%}
         <footer class="footer">

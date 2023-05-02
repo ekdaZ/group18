@@ -1,0 +1,158 @@
+{%extends 'base.html' %}
+{%block content %}
+
+<head>
+    {%load static%}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<style>
+
+.overview__container{
+    display: block;
+    
+    text-align: center;
+    justify-self: center;
+
+    margin: 0 auto 0 auto;
+
+    padding: 20px 50px;
+
+    height: auto;
+    width: 100%;
+    z-index: 1;
+
+    background-color: #fed2df;
+}
+
+.overview__container:nth-child(odd){
+    background-color: #fff;
+}
+
+.overview__container h1{
+    font-size: 40px;
+    font-weight: 900;
+    margin-top: 10px;
+    color: #370110;
+}
+
+.overview__input{
+    display: inline-block;
+
+    box-shadow: 0 8px 12px 0 #9e848c;
+
+    border-radius: 5px;
+    
+    font-family: 'Nunito Sans', sans-serif, bold;
+    font-size: 20px;
+    color: rgb(46, 46, 46);
+
+    padding: 20px 80px;
+    margin: 30px;
+}
+
+.overview__input input{
+    border: 0px rgba(255, 255, 255, 0);
+    border-radius: 2px;
+
+    font-weight: bold;
+    background-color: #ffeff4;
+    
+    margin-left: 5px;
+    padding: 2px 5px;
+}
+
+#progress__bar{
+    height: 30px;
+    background-color: #fff;
+
+    width: 95%;
+    float: left;
+
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#progress__bar__fill{
+
+    background-color: #7d00b2;
+    height: 100%;
+}
+
+.progress__container{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.progress__container img{
+
+    float: left;
+
+    width: 30px;
+    margin-left: 10px;
+}
+
+#overview__one{
+
+    height: 100%;
+    background-color: #fed2df;
+
+}
+
+
+</style>
+
+<div class="overview__container">
+    <h1>Daily Goal</h1>
+    <div class="overview__input">
+        <span>
+            Enter the number of hours you want to work for the day: <input type="number" min="1" max="24" step="0.25" id="hours__input">
+        </span>
+    </div>
+    <div class="progress__container">
+        <div id="progress__bar">
+            <div id="progress__bar__fill" style="width: 50%;"></div>
+        </div>
+        <img src="{% static 'Flag.png' %}" alt="Icon">
+    </div>
+</div>
+
+<div class="overview__container">
+
+    <h1>Weekly goal</h1>
+           
+    <canvas id="myChart"></canvas>
+            
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['{{ seven_days_ago }}', '{{ six_days_ago }}', '{{ five_days_ago }}', '{{ four_days_ago }}', '{{ three_days_ago }}', '{{ two_days_ago }}', '{{ yesterday }}'],
+                    datasets: [{
+                        label: 'My Graph',
+                        data: { values },
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+            </script>
+        </div>
+    </div>
+    
+
+{% endblock %}
