@@ -1,0 +1,283 @@
+{% load static %}
+
+* {
+    /* sets how the total width and height of an element is calculated; 
+        border-box tells the browser to account for any border and padding in the 
+        values you specify for an element's width and height */
+    box-sizing: border-box;
+    /* sets the margin area on all four sides of an element; 
+        every rectangular box representing each element is composed of four parts: 
+        the content edge, padding edge, border edge, and margin edge. */
+    padding: 0;
+    /* used to create space around an element's content, inside of any defined borders. */
+    margin: 0;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+/* Navigation CSS */
+.navbar {
+    background-color: #fed2df;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.navbar__container {
+    /* this creates two invisible axis; the main axis (x) and the cross axis (y). */
+    display: flex;
+    /* has a default value of stretch; aligns items on the main axis. */
+    justify-content: space-between;
+    /* has a default value of stretch; aligns items on the cross axis. */
+    align-items: center;
+
+    height: 60px;
+    width: 100%;
+    /* sets the depth of the container; the words must be on top. */
+    z-index: 1;
+
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+#navbar__icon {
+    color: #333333;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.75rem;
+    font-weight: 300;
+    font-style: italic;
+    padding-left: 80px;
+}
+
+#icon {
+    height: 50px;
+    padding: 5px 0 5px 0;
+}
+
+.navbar__menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    text-align: center;
+}
+
+.menu {
+    color: #333333;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    height: 100%;
+}
+
+.menu:hover {
+    color: #f77062;
+    transition: all 0.3s ease;
+}
+
+.navbar__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#button {
+    color: #fff;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 10px 20px;
+    height: 100%;
+    width: 100%;
+
+    border: none;
+    outline: none;
+    border-radius: 90px;
+    background: rgb(250, 61, 124);
+    background: linear-gradient(180deg, rgba(250, 61, 124, 1) 0%, rgba(254, 101, 157, 1) 100%);
+}
+
+#button:hover {
+    background: #4837ff;
+    transition: all 0.3s ease;
+}
+
+/* Main Content CSS */
+.main {
+    background-color: #fed2df;
+    overflow-x: hidden;
+}
+
+.main__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-self: center;
+
+    margin: 0 auto 0 auto;
+    padding-right: 50px;
+    padding-left: 50px;
+
+    height: 92vh;
+    width: 100%;
+    max-width: 1300px;
+    z-index: 1;
+}
+
+.main__content {
+    width: 100%;
+}
+
+.main__content h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-top: 10px;
+    color: #370110;
+}
+
+.main__content p {
+    color: #996675;
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-top: 1.5rem;
+}
+
+.main__button {
+    background: rgb(250, 61, 124);
+    background: linear-gradient(180deg, rgba(250, 61, 124, 1) 0%, rgba(254, 101, 157, 1) 100%);
+    font-size: 1rem;
+    padding: 14px 32px;
+    margin-top: 2rem;
+
+    border: none;
+    border-radius: 90px;
+
+    position: relative;
+    cursor: pointer;
+    transition: all 0.35s;
+    outline: none;
+}
+
+.main__button a {
+    color: #eee;
+    text-decoration: none;
+    z-index: 2;
+    position: relative;
+}
+
+.main__button:hover {
+    background: #4837ff;
+    transition: all 0.3s ease;
+}
+
+.main__image {
+    text-align: center;
+}
+
+#image {
+    height: 80%;
+    width: 80%;
+}
+
+/* Section CSS */
+.heading {
+    background-color: #fff;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 50px auto 10px auto;
+}
+
+.heading h2 {
+    color: #370110;
+    font-size: 3rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.section {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.section__image {
+    flex: 1;
+    margin-right: 40px;
+    overflow: hidden;
+}
+
+.section__image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transition: 0.5s ease;
+}
+
+.section__image:hover img {
+    transform: scale(1.1);
+}
+
+.section__content {
+    flex: 1;
+}
+
+.section__content h3 {
+    font-size: 23px;
+    margin-bottom: 15px;
+    color: #370110;
+}
+
+.section__content p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #996675;
+}
+
+@media screen and (max-width: 768px) {
+    .heading {
+        padding: 0px 20px;
+    }
+    .heading h2 {
+        font-size: 36px;
+    }
+    .section {
+        padding: 0px;
+    }
+    .section__container {
+        padding: 20px;
+        flex-direction: column;
+    }
+    .section__image {
+        margin-right: 0px;
+        margin-bottom: 20px;
+    }
+    .section__content {
+        padding: 0px;
+        font-size: 16px;
+    }
+}
+
+/* Footer CSS */
+.footer {
+    padding: 1rem 0 2rem 0;
+    margin: 40px auto 0 100px;
+}
