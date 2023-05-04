@@ -5,6 +5,7 @@ from .forms import ActivityForm
 from django.contrib import messages
 import datetime
 from django.contrib.auth.decorators import login_required
+import csv
 
 # Create your views here.
 
@@ -54,7 +55,20 @@ def new_activity(request):
     return render(request, 'create-activity.html' , context)
 
 
-# @login_required(login_url='login')
-# def timer(request):
+@login_required(login_url='login')
+def timer(request, activity_name):
+    activity = Activity.objects.get(activity_name = activity_name)
+    time = int((activity.duration*3600 - activity.completion*3600) // 1)
+    context = {'time': time}
+    return render(request, "timer.html", context)
     
+@login_required(login_url='login')
+def graph(request,activity_name):
+        records = SubActivity.objects.filter(activity_name = activity_name).order_by("-date")
+        with open('storage.csv', mode ='w', newline='') as results:
+            results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            results_writer.writerow(["Duration:"] + records.duration)
+            results_writer.writerow(["Booster:"] + records.booster)
+            results_writer.writerow(["Date"] + records.date)
+
 
