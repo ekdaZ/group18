@@ -1,56 +1,53 @@
 {%extends 'base.html'%}
 {% block content %}
+{%load static%}
 
-<style>
-table, th, td {
-  border:1px solid black;
-}
-body {
-    height: 100%;
-    margin: 0;
-}
-.table {
-    height:100%;
-    width: 100%;
-}
-.t_container {
-    display: flex;
-    flex-flow: column;
-    height: 100%;
-    background-color: aqua;
-}
-.body .footer{
-    flex: 0 1 40 px;
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity</title>
+    <link rel="stylesheet" href="{% static 'timetable.css' %}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet">
+</head>
 
 <body>
-    <div class="t_container">
-        <table class="table">
-            <tr>
-                {% for item in activity %}
-                <th>{{ item.activity_name }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for item in activity %}
-                    <td>
-                        {{item.date_time_start}}
-                        <a href="{% url 'info' %}"> Click </a>
-                    </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for item in activity %}
-                <td>{{item.date_time_finish}}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for item in activity %}
-                <td>{{item.completed}}</td>
-                {% endfor %}
-            </tr>
-        </table>
+    <div class="activity_container">
+        <p><a href="{% url 'create-activity'  %}" class="menu">Create new activity</a></p>
+        <h1 class="title">Activities</h1>
+
+        {% for item in activity %}
+        <div class="activity">
+            <div class="activity_left">
+                <h3 class="activity_name">{{item.activity_name}}</h3>
+
+                <div class="record_description">
+                    {{item.record_description}}
+                </div>
+
+                <div class="date_time_start">
+                    {{item.date_time_start}}
+                </div>
+
+                <button class="button"><a href="{% url 'timer' activity_name=item.activity_name %}">Start</a></button>
+            </div>
+            <div class="activity_right">
+                <div class="activity_date">
+                    <div class="duration">{{item.duration}}</div>
+                    <div class="unit">hours</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
 </body>
+
+</html>
+
 {% endblock %}

@@ -13,70 +13,92 @@
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Open+Sans:wght@300&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{% static 'timer.css' %}">
+    <link rel="stylesheet" href="{% static 'timer_clock.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
 </head>
-<div id="myvar">{{ time }}</div>
-<script data-username="{{ time }}" >
-            const Etime = document.currentScript.dataset;
-            const Dtime = Etime.time;
-            console.log(Dtime);
+    <div  id="myvar"><h2>{{ time }} </h2></div>
 
-            class Timer {
-                    constructor(time) {
-                        console.log(time)
-                        this.interval = null;
-                        this.remainingSeconds = time;
-                    }
+    <div class="clock-timer">
+    <h1 id="timer">00:00:00</h1>
 
-                    // Updates the time on the clock.
-                    updateInterfaceTime() {
-                        const hours = Math.floor(this.remainingSeconds / 3600)
-                        const minutes = Math.floor(this.remainingSeconds / 60);
-                        const seconds = this.remainingSeconds % 60;
-                        console.log(hours + "h "
-                            + minutes + "m " + seconds + "s ")
-                    }
+    <button id="start-btn" onclick="timerStart()">Start</button>
+		<button id="reset-btn" onclick="timerPause()">Pause</button>
+		<button id="resume-btn"  onclick="timerResume()">Resume</button>
+		<button id="stop-btn" onclick="timerStop()">Stop</button>
+	</div>
 
-                    // Counts down until it hits zero.
-                    start() {
-                        this.interval = setInterval(() => {
-                            this.remainingSeconds--;
-                            this.updateInterfaceTime();
 
-                            if (this.remainingSeconds === 0) {
-                                this.stop();
-                            }
-                        }, 1000);
-                    }
 
-                    // Stops counting down.
-                    stop() {
-                        clearInterval(this.interval);
-                        this.interval = null;
-                        // this.updateInterfaceControls();
-                    }
+
+
+<script>
+	var startTime, timerInterval, elapsedTime = 0;
+    const display = document.getElementById("timer");
+    const startButton = document.getElementById("start-btn");
+    const pauseButton = document.getElementById("pause-btn");
+    const resumeButton = document.getElementById("resume-btn");
+    const stopButton = document.getElementById("stop-btn");#}
+    function timerStart() {
+            startButton.disabled = true;
+			startTime = Date.now() - elapsedTime;
+			timerInterval = setInterval(function() {
+				var now = Date.now();
+				var elapsed = now - startTime;
+				elapsedTime = elapsed;
+				var minutes = Math.floor((elapsed / 1000 / 60) % 60);
+				var seconds = Math.floor((elapsed / 1000) % 60);
+				var milliseconds = Math.floor((elapsed % 1000) / 10);
+				$('#timer').text((minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ':' + (milliseconds < 10 ? '0' : '') + milliseconds);
+			}, 10);
+		}
+
+		function timerPause() {
+			clearInterval(timerInterval);
+		}
+
+		function timerResume() {
+
+			startTime = Date.now() - elapsedTime;
+			timerInterval = setInterval(function() {
+                var now = Date.now();
+                var elapsed = now - startTime;
+                elapsedTime = elapsed;
+                var minutes = Math.floor((elapsed / 1000 / 60) % 60);
+                var seconds = Math.floor((elapsed / 1000) % 60);
+                var milliseconds = Math.floor((elapsed % 1000) / 10);
+                $('#timer').text((minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ':' + (milliseconds < 10 ? '0' : '') + milliseconds)
+            })
+        }
+
+        function timerStop() {
+            clearInterval(timerInterval);
+            var minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
+            var seconds = Math.floor((elapsedTime / 1000) % 60);
+            var milliseconds = Math.floor((elapsedTime % 1000) / 10);
+            var time = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ':' + (milliseconds < 10 ? '0' : '') + milliseconds;
+            $.ajax({
+                url: "{% url 'timer_stop' %}",
+                type: "POST",
+                data: { time: time, csrfmiddlewaretoken: "{{ csrf_token }}" },
+                success: function(response) {
+                    console.log(response);
                 }
+            });
+    }
 
 
-                function timer_start() {
-                    timer.start();
-                    // console.log('kjnhhb v');
-                }
 
-                function timer_stop(){
-                    timer.stop()
-                }
 
-                const timer = new Timer(time)
 
-</script>
 
-    <!-- Timer Section -->
-    <section class="timer_background">
-        <p id="demo"></p>
-        <button onclick = "timer_start()" >Start</button>
-        <button onclick="timer_stop()">Stop</button>
-    </section>
 
+
+
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 {%endblock%}

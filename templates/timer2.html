@@ -1,0 +1,81 @@
+{%extends 'base.html' %}
+{%block content %}
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link rel="icon" href="{% static 'Focal logo.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'timer.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<div id="seconds" data="{{ time }}">{{ time }}</div>
+<p id="demo"></p>
+<script>
+            class Timer {
+                    constructor(time) {
+                        console.log(time)
+                        this.interval = null;
+                        this.remainingSeconds = time;
+                    }
+
+                    // Updates the time on the clock.
+                    updateInterfaceTime() {
+                        const hours = Math.floor(this.remainingSeconds / 3600)
+                        const minutes = Math.floor(this.remainingSeconds / 60);
+                        const seconds = this.remainingSeconds % 60;
+                        document.getElementById('demo').innerHTML = hours + "h "
+                            + minutes + "m " + seconds + "s ";
+
+                    }
+
+                    // Counts down until it hits zero.
+                    start() {
+                        this.interval = setInterval(() => {
+                            this.remainingSeconds--;
+                            console.log(this.remainingSeconds);
+                            this.updateInterfaceTime();
+
+                            if (this.remainingSeconds === 0) {
+                                this.stop();
+                            }
+                        }, 1000);
+                    }
+
+                    // Stops counting down.
+                    stop() {
+                        clearInterval(this.interval);
+                        this.interval = null;
+                        // this.updateInterfaceControls();
+                    }
+                }
+
+
+                function timer_start() {
+                    timer.start();
+                    // console.log('kjnhhb v');
+                }
+
+                function timer_stop(){
+                    timer.stop()
+                }
+
+                const timer = new Timer(100)
+                
+
+</script>
+
+    <!-- Timer Section -->
+    <section class="timer_background">
+        <button onclick="timer_start()">Start</button>
+        <button onclick="timer_stop()">Stop</button>
+    </section>
+
+
+{%endblock%}
