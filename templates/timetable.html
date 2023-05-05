@@ -18,7 +18,6 @@
 
 <body>
     <div class="activity_container">
-        <p><a href="{% url 'create-activity'  %}" class="menu">Create new activity</a></p>
         <h1 class="title">Activities</h1>
 
         {% for item in activity %}
@@ -33,8 +32,6 @@
                 <div class="date_time_start">
                     {{item.date_time_start}}
                 </div>
-
-                <button class="button"><a href="{% url 'timer' activity_name=item.activity_name %}">Start</a></button>
             </div>
             <div class="activity_right">
                 <div class="activity_date">

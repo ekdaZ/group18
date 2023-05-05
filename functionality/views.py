@@ -14,7 +14,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import io
 import base64
-# Create your views here.
+
 
 @login_required(login_url='login')
 def timetable(request):
@@ -69,17 +69,17 @@ def timer(request, activity_name):
     context = {'time': time}
     return render(request, "timer.html", context)
 
-
-def timer_stop(request):
-    if request.method == 'POST':
-        timer_value = request.POST.get('time')
-        print(timer_value)
-        # Do something with the timer value, such as saving it to a model or file
-        response_data = {'message': 'Timer value received: ' + timer_value}
-        return JsonResponse(response_data)
-    else:
-        return JsonResponse({'message': 'Invalid request method'})
     
+@login_required(login_url='login')
+def graph(request,activity_name):
+        records = SubActivity.objects.filter(activity_name = activity_name).order_by("-date")
+        with open('storage.csv', mode ='w', newline='') as results:
+            results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            results_writer.writerow(["Duration:"] + records.duration)
+            results_writer.writerow(["Booster:"] + records.booster)
+            results_writer.writerow(["Date"] + records.date)
+
+
 
 @login_required(login_url='login')
 def overview(request):
@@ -149,4 +149,4 @@ def overview(request):
         else:
             streak = 0
 
-    return render(request, 'overview.html', {'graphic': graphic, 'streak':streak})
+    return render(request, 'overview.html', {'graphic':graphic, 'streak':streak})
