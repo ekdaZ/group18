@@ -38,23 +38,23 @@
         <div class="container-login100" style="background-image: url({% static 'bg-02.jpg' %});">
             <div class="wrap-login100">
                 <form method="POST" action="" class="login100-form validate-form">
-    
+
                     {% csrf_token %}
                     <span class="login100-form-logo">
                         <i class="zmdi zmdi-landscape"></i>
                     </span>
-    
+
                     <span class="login100-form-title p-b-34 p-t-27">
                         Create Activity
                     </span>
-    
+
                     {{form}}
                     <!-- <div class="text-center p-t-90">
                         {% for message in messages %}
                         <p id="messages">{{message}}</p>
                         {% endfor %}
                     </div> -->
-    
+
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" type="submit" name="Create User">
                             Submit
@@ -67,7 +67,7 @@
 
 
     <div id="dropDownSelect1"></div>
-    
+
     <!--===============================================================================================-->
     <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
     <!--===============================================================================================-->

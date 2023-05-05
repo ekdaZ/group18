@@ -40,7 +40,7 @@ def new_activity(request):
             description = form.cleaned_data.get('record_description')
             # end = form.cleaned_data.get('date_time_finish')
             start = form.cleaned_data.get('date_time_start')
-            now = datetime.datetime.today()
+            now = datetime.today()
             start = start.replace(tzinfo = None)
             # end = end.replace(tzinfo = None)
             user = User.objects.get(username = request.user.username)
@@ -70,14 +70,15 @@ def timer(request, activity_name):
     return render(request, "timer.html", context)
 
     
-@login_required(login_url='login')
-def graph(request,activity_name):
-        records = SubActivity.objects.filter(activity_name = activity_name).order_by("-date")
-        with open('storage.csv', mode ='w', newline='') as results:
-            results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            results_writer.writerow(["Duration:"] + records.duration)
-            results_writer.writerow(["Booster:"] + records.booster)
-            results_writer.writerow(["Date"] + records.date)
+def timer_stop(request):
+    if request.method == 'POST':
+        timer_value = request.POST.get('time')
+        print(timer_value)
+        # Do something with the timer value, such as saving it to a model or file
+        response_data = {'message': 'Timer value received: ' + timer_value}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'message': 'Invalid request method'})
 
 
 
