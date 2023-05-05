@@ -14,9 +14,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import io
 import base64
-from bs4 import BeautifulSoup
 
-# Create your views here.
 
 @login_required(login_url='login')
 def timetable(request):
@@ -70,6 +68,7 @@ def timer(request, activity_name):
     time = int((activity.duration*3600 - activity.completion*3600) // 1)
     context = {'time': time}
     return render(request, "timer.html", context)
+
     
 @login_required(login_url='login')
 def graph(request,activity_name):

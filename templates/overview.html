@@ -7,109 +7,107 @@
 </head>
 
 <style>
+    .overview__container {
+        display: block;
 
-.overview__container{
-    display: block;
-    
-    text-align: center;
-    justify-self: center;
+        text-align: center;
+        justify-self: center;
 
-    margin: 0 auto 0 auto;
+        margin: 0 auto 0 auto;
 
-    padding: 20px 50px;
+        padding: 20px 50px;
 
-    height: auto;
-    width: 100%;
-    z-index: 1;
+        height: auto;
+        width: 100%;
+        z-index: 1;
 
-    background-color: #fed2df;
-}
+        background-color: #fed2df;
+    }
 
-.overview__container:nth-child(odd){
-    background-color: #fff;
-}
+    .overview__container:nth-child(odd) {
+        background-color: #fff;
+    }
 
-.overview__container h1{
-    font-size: 40px;
-    font-weight: 900;
-    margin-top: 10px;
-    color: #370110;
-}
+    .overview__container h1 {
+        font-size: 40px;
+        font-weight: 900;
+        margin-top: 10px;
+        color: #370110;
+    }
 
-.overview__input{
-    display: inline-block;
+    .overview__input {
+        display: inline-block;
 
-    box-shadow: 0 8px 12px 0 #9e848c;
+        box-shadow: 0 8px 12px 0 #9e848c;
 
-    border-radius: 5px;
-    
-    font-family: 'Nunito Sans', sans-serif, bold;
-    font-size: 20px;
-    color: rgb(46, 46, 46);
+        border-radius: 5px;
 
-    padding: 20px 80px;
-    margin: 30px;
-}
+        font-family: 'Nunito Sans', sans-serif, bold;
+        font-size: 20px;
+        color: rgb(46, 46, 46);
 
-.overview__input input{
-    border: 0px rgba(255, 255, 255, 0);
-    border-radius: 2px;
+        padding: 20px 80px;
+        margin: 30px;
+    }
 
-    font-weight: bold;
-    background-color: #ffeff4;
-    
-    margin-left: 5px;
-    padding: 2px 5px;
-}
+    .overview__input input {
+        border: 0px rgba(255, 255, 255, 0);
+        border-radius: 2px;
 
-#progress__bar{
-    height: 30px;
-    background-color: #fff;
+        font-weight: bold;
+        background-color: #ffeff4;
 
-    width: 95%;
-    float: left;
+        margin-left: 5px;
+        padding: 2px 5px;
+    }
 
-    padding: 5px;
-    border-radius: 5px;
-}
+    #progress__bar {
+        height: 30px;
+        background-color: #fff;
 
-#progress__bar__fill{
+        width: 95%;
+        float: left;
 
-    background-color: #7d00b2;
-    height: 100%;
-}
+        padding: 5px;
+        border-radius: 5px;
+    }
 
-.progress__container{
+    #progress__bar__fill {
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-}
+        background-color: #7d00b2;
+        height: 100%;
+    }
 
-.progress__container img{
+    .progress__container {
 
-    float: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-    width: 30px;
-    margin-left: 10px;
-}
+    }
 
-#overview__one{
+    .progress__container img {
 
-    height: 100%;
-    background-color: #fed2df;
+        float: left;
 
-}
+        width: 30px;
+        margin-left: 10px;
+    }
 
+    #overview__one {
 
+        height: 100%;
+        background-color: #fed2df;
+
+    }
 </style>
 
 <div class="overview__container">
     <h1>Daily Goal</h1>
     <div class="overview__input">
         <span>
-            Enter the number of hours you want to work for the day: <input type="number" min="1" max="24" step="0.25" id="hours__input">
+            Enter the number of hours you want to work for the day: <input type="number" min="1" max="24" step="0.25"
+                id="hours__input">
         </span>
     </div>
 </div>
@@ -120,21 +118,7 @@
         <div><img src="data:image/png;base64,{{ graphic }}" alt="Bar Chart"></div>
         <div>
             <h1>Hours Worked</h1>
-            <p>On the left is a graph displaying the number of hours of activities that have been completed over the last seven days, and have been logged on the website</p>
-            &nbsp;
-            <div style="column-count: 2;">
-            <div style="background-color: blue; color: white; font-weight: bold; font-size: 20px">This is the hours completed</div>
-            <div style="background-color: purple; color: white; font-weight: bold; font-size: 20px">This is the goal hours</div>
-            </div>
-            
-            <div style="background-color: white; border: 4px goldenrod solid; border-radius: 20px; margin: auto; margin-top: 20px; padding: 30px; width: 250px; align-self: center;">
-                <h2 style="font-weight: bold; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: goldenrod">Win Streak</h2>
-            </div>
-            <div style="background-color: white; border: 4px goldenrod solid; border-radius: 20px; margin: auto; margin-top: 20px; padding: 15px; width: 250px; height: 150px; font-size: 50px; align-self: center;">
-                <h2 style="font-weight: bold; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: goldenrod">{{ streak }}</h2>
-            </div>
-            
-        
+
         </div>
 
     </div>
