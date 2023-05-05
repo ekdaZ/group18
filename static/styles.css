@@ -110,6 +110,17 @@
     transition: all 0.3s ease;
 }
 
+.welcome {
+    padding-left: 50px;
+}
+
+.logout {
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+}
+
 /* Main Content CSS */
 .main {
     background-color: #fed2df;
