@@ -1,10 +1,20 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from .forms import ActivityForm
 from django.contrib import messages
 import datetime
 from django.contrib.auth.decorators import login_required
+import csv
+import openpyxl
+from datetime import datetime, timedelta
+from django.shortcuts import render
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import io
+import base64
+from bs4 import BeautifulSoup
 
 # Create your views here.
 
@@ -54,7 +64,90 @@ def new_activity(request):
     return render(request, 'create-activity.html' , context)
 
 
-# @login_required(login_url='login')
-# def timer(request):
+@login_required(login_url='login')
+def timer(request, activity_name):
+    activity = Activity.objects.get(activity_name = activity_name)
+    time = int((activity.duration*3600 - activity.completion*3600) // 1)
+    context = {'time': time}
+    return render(request, "timer.html", context)
     
+@login_required(login_url='login')
+def graph(request,activity_name):
+        records = SubActivity.objects.filter(activity_name = activity_name).order_by("-date")
+        with open('storage.csv', mode ='w', newline='') as results:
+            results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            results_writer.writerow(["Duration:"] + records.duration)
+            results_writer.writerow(["Booster:"] + records.booster)
+            results_writer.writerow(["Date"] + records.date)
 
+
+
+@login_required(login_url='login')
+def overview(request):
+
+    goal_value = 0.5
+
+    # load the Excel file
+    workbook = openpyxl.load_workbook('subactivities.xlsx')
+    worksheet = workbook.active
+
+    # get current date
+    end_date = datetime.now().date()
+
+    # get date one week ago
+    start_date = (datetime.now() - timedelta(days=7)).date()
+
+    # find the column indices for "name" and "date"
+    name_col_index = None
+    date_col_index = None
+    hour_col_index = None
+    for col in worksheet.iter_cols(min_row=1, max_row=1):
+        if col[0].value == "name":
+            name_col_index = col[0].col_idx - 1
+        elif col[0].value == "date":
+            date_col_index = col[0].col_idx - 1
+        elif col[0].value == "duration":
+            hour_col_index = col[0].col_idx - 1
+        
+        if name_col_index is not None and date_col_index is not None and hour_col_index is not None:
+            break
+
+    # iterate through the rows of the worksheet to find the activities within the date range
+    data = {}
+    for row in worksheet.iter_rows(min_row=2):
+        activity_date = row[date_col_index].value.date()
+        if activity_date >= start_date and activity_date <= end_date:
+            activity_label = activity_date.strftime("%d/%m")
+            if not data.get(activity_label):
+                data.update({activity_label: 0})
+            data[activity_label] += row[hour_col_index].value
+
+    sorted(data)
+
+    goal = { x:goal_value for x in data}
+    
+    plt.plot(list(data.keys()), list(data.values()), color="blue")
+    plt.plot(list(goal.keys()), list(goal.values()), color="purple")
+
+    plt.xlabel('Day')
+    plt.ylabel('Hours')
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png', transparent=True)
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+
+    graphic = base64.b64encode(image_png)
+    graphic = graphic.decode('utf-8')
+
+
+    data = list(data)
+    streak = 0
+    for value in data:
+        if int(value[1]) >= goal_value:
+            streak += 1
+        else:
+            streak = 0
+
+    return render(request, 'overview.html', {'graphic':graphic, 'streak':streak})
